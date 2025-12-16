@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: casc-jobdsl-config
+  namespace: jenkins
+data:
+  casc-jobdsl-config.yaml: |
+    jobs:
+     - file: /var/jenkins_home/jobdsl/*.groovy

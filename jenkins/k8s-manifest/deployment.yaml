@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-server
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: jenkins-server
+    spec:
+      securityContext:
+            fsGroup: 1000
+            runAsUser: 1000
+      serviceAccountName: jenkins-admin
+      initContainers:
+        - name: install-plugins
+          image: jenkins/jenkins:lts
+          securityContext:
+            runAsUser: 0
+          env:
+            - name: JENKINS_HOME
+              value: /var/jenkins_home
+          command:
+            - sh
+            - -c
+            - |
+              set -eux
+              mkdir -p /var/jenkins_home/plugins
+              chown -R 1000:1000 /var/jenkins_home
+              jenkins-plugin-cli \
+                --plugin-file /plugins/plugin.txt \
+                --plugin-download-directory /var/jenkins_home/plugins
+          volumeMounts:
+            - name: jenkins-data
+              mountPath: /var/jenkins_home
+            - name: jenkins-plugins
+              mountPath: /plugins
+      containers:
+        - name: jenkins
+          image: jenkins/jenkins:lts
+          imagePullPolicy: Always
+          env:
+            - name: CASC_JENKINS_CONFIG
+              value: /var/jenkins_home/casc
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+            requests:
+              memory: "500Mi"
+              cpu: "500m"
+          ports:
+            - name: httpport
+              containerPort: 8080
+            - name: jnlpport
+              containerPort: 50000
+          livenessProbe:
+            httpGet:
+              path: "/login"
+              port: 8080
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: "/login"
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: jenkins-data
+              mountPath: /var/jenkins_home
+            - name: jenkins-casc
+              mountPath: /var/jenkins_home/casc
+            - name: jenkins-init-groovy
+              mountPath: /var/jenkins_home/init.groovy.d
+      volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: jenkins-pv-claim
+        - name: jenkins-casc
+          projected:
+            sources:
+              - configMap:
+                  name: casc-jenkins-config
+              - configMap:
+                  name: casc-tools-config
+              - configMap:
+                  name: casc-jobs-go-config
+              - configMap:
+                  name: casc-jobs-react-config
+        - name: jenkins-plugins
+          configMap:
+            name: jenkins-plugins
+        - name: jenkins-init-groovy
+          configMap:
+            name: jenkins-init-groovy

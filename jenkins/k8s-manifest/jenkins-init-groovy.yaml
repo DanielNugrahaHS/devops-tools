@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-init-groovy
+  namespace: jenkins
+data:
+  create-admin.groovy: |
+    import jenkins.model.*
+    import hudson.security.*
+
+    def instance = Jenkins.getInstance()
+
+    if (!(instance.getSecurityRealm() instanceof HudsonPrivateSecurityRealm)) {
+      def realm = new HudsonPrivateSecurityRealm(false)
+      instance.setSecurityRealm(realm)
+    }
+
+    def realm = instance.getSecurityRealm()
+
+    if (realm.getUser("admin") == null) {
+      realm.createAccount("admin", "admin")
+      println("✅ admin user created")
+    } else {
+      println("ℹ️ admin user already exists")
+    }
+
+    instance.save()

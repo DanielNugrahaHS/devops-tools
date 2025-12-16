@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: casc-tools-config
+  namespace: jenkins
+data:
+   casc-tools.yaml: |
+    tool:
+      git:
+        installations:
+          - name: "Default"
+            home: "/usr/bin/git"
+
+      maven:
+        installations:
+          - name: maven3
+            properties:
+              - installSource:
+                  installers:
+                    - maven:
+                        id: "3.8.4"
+      
+      nodejs:
+        installations:
+          - name: node18
+            properties:
+              - installSource:
+                  installers:
+                    - nodeJSInstaller:
+                        id: "18.18.0"
+
+      go:
+        installations:
+          - name: go1.22
+            properties:
+              - installSource:
+                  installers:
+                    - golangInstaller:
+                        id: "1.22.0"
+
