@@ -1,22 +1,22 @@
-pipelineJob('seed-job') {
-  definition {
-    cps {
-      sandbox()
-      script("""
-        pipeline {
-          agent any
+import org.yaml.snakeyaml.Yaml
 
-          stages {
-            stage('Load Job DSL') {
-              steps {
-                jobDsl targets: 'jobdsl/*.groovy',
-                // jobDsl targets: 'jobdsl/go/*.groovy',
-                // jobDsl targets: 'jobdsl/react/*.groovy'
-              }
-            }
-          }
-        }
-      """)
-    }
-  }
+def yaml = new Yaml()
+
+// GO PROJECTS
+def goCfg = yaml.load(readFileFromWorkspace('projects/go.yaml'))
+goCfg.projects.each { p ->
+  evaluate readFileFromWorkspace('templates/go.groovy'), [
+    name: p.name,
+    port: p.port,
+    repo: p.repo
+  ]
+}
+
+// REACT PROJECTS
+def reactCfg = yaml.load(readFileFromWorkspace('projects/react.yaml'))
+reactCfg.projects.each { p ->
+  evaluate readFileFromWorkspace('templates/react.groovy'), [
+    name: p.name,
+    repo: p.repo
+  ]
 }

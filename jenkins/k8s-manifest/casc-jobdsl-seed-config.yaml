@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-jobdsl
+data:
+  seed.groovy: |
+    import org.yaml.snakeyaml.Yaml
+
+    def yaml = new Yaml()
+    
+    def goCfg = yaml.load(readFileFromWorkspace('projects/go.yaml'))
+    goCfg.projects.each { p ->
+      evaluate readFileFromWorkspace('templates/go.groovy'), [
+        name: p.name,
+        port: p.port,
+        repo: p.repo
+      ]
+    }
+    
+    def reactCfg = yaml.load(readFileFromWorkspace('projects/react.yaml'))
+    reactCfg.projects.each { p ->
+      evaluate readFileFromWorkspace('templates/react.groovy'), [
+        name: p.name,
+        repo: p.repo
+      ]
+    }

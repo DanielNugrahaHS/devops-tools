@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jenkins-jobdsl
+  namespace: jenkins
+data:
+  projects/go.yaml: |
+    projects:
+      - name: user-service
+        port: 8080
+        repo: git@github.com:org/user-service.git
+
+  projects/react.yaml: |
+    projects:
+      - name: admin-ui
+        repo: git@github.com:org/admin-ui.git

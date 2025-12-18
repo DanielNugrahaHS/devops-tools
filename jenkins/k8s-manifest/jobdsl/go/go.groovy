@@ -1,31 +1,30 @@
-pipelineJob('go-app') {
-  parameters {
-    stringParam('REPO_URL', '', 'Git repository URL')
-  }
+def cfg = binding.variables
 
+pipelineJob("DEVELOPMENT/${cfg.name}") {
   definition {
     cps {
-      sandbox()
+      sandbox(true)
       script("""
         pipeline {
           agent any
-
+          environment {
+            APP_NAME = '${cfg.name}'
+            APP_PORT = '${cfg.port}'
+          }
           stages {
             stage('Checkout') {
               steps {
-                git params.REPO_URL
+                git '${cfg.repo}'
               }
             }
-
             stage('Build') {
               steps {
                 sh 'go build ./...'
               }
             }
-
-            stage('Test') {
+            stage('Deploy') {
               steps {
-                sh 'go test ./...'
+                sh 'echo Deploy ${cfg.name} on port ${cfg.port}'
               }
             }
           }

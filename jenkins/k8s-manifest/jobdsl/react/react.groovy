@@ -1,28 +1,19 @@
-pipelineJob('react-app') {
-  parameters {
-    stringParam('REPO_URL', '', 'Git repository URL')
-  }
+def cfg = binding.variables
 
+pipelineJob("DEVELOPMENT/${cfg.name}") {
   definition {
     cps {
-      sandbox()
+      sandbox(true)
       script("""
         pipeline {
           agent any
-
-          tools {
-            nodejs 'node18'
-          }
-
           stages {
-            stage('Install') {
-              steps {
-                sh 'npm install'
-              }
+            stage('Checkout') {
+              steps { git '${cfg.repo}' }
             }
-
             stage('Build') {
               steps {
+                sh 'npm install'
                 sh 'npm run build'
               }
             }

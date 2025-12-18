@@ -100,7 +100,13 @@ spec:
               - configMap:
                   name: casc-jobs-react-config
               - configMap:
-                  name: casc-jobdsl-config
+                  name: casc-jobdsl-seed-config
+              - configMap:
+                  name: casc-jobdsl-go-config
+              - configMap:
+                  name: casc-jobdsl-react-config
+              - configMap:
+                  name: casc-jobdsl-project-config
         - name: jenkins-plugins
           configMap:
             name: jenkins-plugins
