@@ -3,6 +3,8 @@ kind: Kustomization
 
 resources:
   - ../base
+  - argocd-repo-tools-secret.yaml
+  - argocd-cluster-secret.yaml
 
 patches:
   - path: argocd-server-patch.yaml
