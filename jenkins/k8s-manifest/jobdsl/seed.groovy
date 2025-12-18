@@ -10,8 +10,8 @@ pipelineJob('seed-job') {
             stage('Load Job DSL') {
               steps {
                 jobDsl targets: 'jobdsl/*.groovy',
-                jobDsl targets: 'jobdsl/go/*.groovy',
-                jobDsl targets: 'jobdsl/react/*.groovy'
+                // jobDsl targets: 'jobdsl/go/*.groovy',
+                // jobDsl targets: 'jobdsl/react/*.groovy'
               }
             }
           }
