@@ -99,6 +99,8 @@ spec:
                   name: casc-jobs-go-config
               - configMap:
                   name: casc-jobs-react-config
+              - configMap:
+                  name: casc-jobdsl-config
         - name: jenkins-plugins
           configMap:
             name: jenkins-plugins

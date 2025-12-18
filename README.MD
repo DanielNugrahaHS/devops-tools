@@ -29,3 +29,15 @@ Jenkins :
 
 Last Note
 Job DSL belum di setup
+
+Expose service minikube:
+minikube service jenkins-service -n jenkins
+
+
+2. Setup ArgoCD
+
+ArgoCD mendukung bcrypt untuk password user dengan cara menjalankan:
+htpasswd -nbBC 10 devops 'devops' 
+htpasswd -nbBC 10 backend 'backend' 
+
+
