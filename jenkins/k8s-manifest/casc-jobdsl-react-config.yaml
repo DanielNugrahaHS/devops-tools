@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: casc-jobdsl-go-config
+  name: casc-jobdsl-react-config
 data:
-  templates/go.groovy: |
+  templates/react.groovy: |
     def cfg = binding.variables
 
     pipelineJob("DEVELOPMENT/${cfg.name}") {
@@ -13,24 +13,14 @@ data:
           script("""
             pipeline {
               agent any
-              environment {
-                APP_NAME = '${cfg.name}'
-                APP_PORT = '${cfg.port}'
-              }
               stages {
                 stage('Checkout') {
-                  steps {
-                    git '${cfg.repo}'
-                  }
+                  steps { git '${cfg.repo}' }
                 }
                 stage('Build') {
                   steps {
-                    sh 'go build ./...'
-                  }
-                }
-                stage('Deploy') {
-                  steps {
-                    sh 'echo Deploy ${cfg.name} on port ${cfg.port}'
+                    sh 'npm install'
+                    sh 'npm run build'
                   }
                 }
               }
@@ -39,3 +29,4 @@ data:
         }
       }
     }
+

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: jenkins-jobdsl
+  name: casc-jobdsl-seed-config
 data:
   seed.groovy: |
     import org.yaml.snakeyaml.Yaml
