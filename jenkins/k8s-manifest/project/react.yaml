@@ -1,4 +1,0 @@
-projects:
-  - name: admin-ui
-    port: 3000
-    repo: git@github.com:org/admin-ui.git

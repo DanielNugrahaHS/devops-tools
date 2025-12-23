@@ -1,8 +1,0 @@
-projects:
-  - name: user-service
-    port: 8080
-    repo: git@github.com:org/user-service.git
-
-  - name: order-service
-    port: 8081
-    repo: git@github.com:org/order-service.git
