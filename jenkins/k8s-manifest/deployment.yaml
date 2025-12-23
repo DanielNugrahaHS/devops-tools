@@ -85,14 +85,13 @@ spec:
             - name: jenkins-init-groovy
               mountPath: /var/jenkins_home/init.groovy.d
             - name: jenkins-jobdsl
-              mountPath: /var/jenkins_home/jobdsl/seed.groovy
-              subPath: seed.groovy
-            - name: jenkins-jobdsl
-              mountPath: /var/jenkins_home/jobdsl/react/react.groovy
-              subPath: react.groovy
-            - name: jenkins-jobdsl
-              mountPath: /var/jenkins_home/jobdsl/go/go.groovy
-              subPath: go.groovy
+              mountPath: /var/jenkins_home/jobdsl
+            # - name: jenkins-jobdsl
+            #   mountPath: /var/jenkins_home/jobdsl/react/react.groovy
+            #   subPath: react.groovy
+            # - name: jenkins-jobdsl
+            #   mountPath: /var/jenkins_home/jobdsl/go/go.groovy
+            #   subPath: go.groovy
             - name: jenkins-jobdsl
               mountPath: /var/jenkins_home/project/projects-go.yaml
               subPath: projects-go.yaml
@@ -119,10 +118,9 @@ spec:
                   name: casc-jobdsl-go-config
               - configMap:
                   name: casc-jobdsl-react-config
-              - configMap:
-                  name: casc-jobdsl-project-config
-              - configMap:
-                  name: casc-jobdsl-seed-config
+        - name: jenkins-project
+          configMap:
+            name: casc-jobdsl-project-config
         - name: jenkins-plugins
           configMap:
             name: jenkins-plugins
