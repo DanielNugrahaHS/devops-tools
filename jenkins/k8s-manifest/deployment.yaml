@@ -84,16 +84,16 @@ spec:
               mountPath: /var/jenkins_home/casc
             - name: jenkins-init-groovy
               mountPath: /var/jenkins_home/init.groovy.d
-            - name: jobdsl-react
+            - name: jenkins-jobdsl
               mountPath: /var/jenkins_home/jobdsl/react/react.groovy
               subPath: react.groovy
-            - name: jobdsl-go
+            - name: jenkins-jobdsl
               mountPath: /var/jenkins_home/jobdsl/go/go.groovy
               subPath: go.groovy
-            - name: jobdsl-project
+            - name: jenkins-jobdsl
               mountPath: /var/jenkins_home/project/projects-go.yaml
               subPath: projects-go.yaml
-            - name: jobdsl-project
+            - name: jenkins-jobdsl
               mountPath: /var/jenkins_home/project/projects-react.yaml
               subPath: projects-react.yaml
       volumes:
