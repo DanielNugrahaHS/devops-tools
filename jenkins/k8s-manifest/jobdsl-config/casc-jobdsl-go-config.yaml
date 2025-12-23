@@ -6,7 +6,7 @@ metadata:
 data:
   templates/go.groovy: |
     def cfg = binding.variables
-  
+
     pipelineJob("DEVELOPMENT/${cfg.name}") {
       definition {
         cps {
@@ -38,5 +38,5 @@ data:
             }
           """)
         }
+      }
     }
-  }
