@@ -6,21 +6,23 @@ metadata:
 data:
   seed.groovy: |
     import org.yaml.snakeyaml.Yaml
-
-    def yaml = new Yaml()
+    import jenkins.model.*
     
-    def goCfg = yaml.load(readFileFromWorkspace('projects/go.yaml'))
+    def yaml = new Yaml()
+    def root = Jenkins.instance.root
+    
+    def goCfg = yaml.load(new File(root, "project/projects-go.yaml").text)
     goCfg.projects.each { p ->
-      evaluate readFileFromWorkspace('templates/go.groovy'), [
+      evaluate new File(root, "jobdsl/go/go.groovy").text, [
         name: p.name,
         port: p.port,
         repo: p.repo
       ]
     }
     
-    def reactCfg = yaml.load(readFileFromWorkspace('projects/react.yaml'))
+    def reactCfg = yaml.load(new File(root, "project/projects-react.yaml").text)
     reactCfg.projects.each { p ->
-      evaluate readFileFromWorkspace('templates/react.groovy'), [
+      evaluate new File(root, "jobdsl/react/react.groovy").text, [
         name: p.name,
         repo: p.repo
       ]
