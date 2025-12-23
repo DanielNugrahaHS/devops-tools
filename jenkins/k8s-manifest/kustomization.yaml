@@ -11,10 +11,11 @@ resources:
   - plugin.yaml
   - jenkins-init-groovy.yaml
   - casc-jenkins-config.yaml
-  - casc-jobs-go-config.yaml
-  - casc-jobs-react-config.yaml
   - casc-tools-config.yaml
-  - casc-jobdsl-go-config.yaml
-  - casc-jobdsl-project.yaml
-  - casc-jobdsl-react-config.yaml
-  - casc-jobdsl-seed-config.yaml
+  # - casc-jobs-go-config.yaml
+  # - casc-jobs-react-config.yaml
+  # - casc-jobdsl-go-config.yaml
+  # - casc-jobdsl-project.yaml
+  # - casc-jobdsl-react-config.yaml
+  # - casc-jobdsl-seed-config.yaml
+  - jobdsl-config

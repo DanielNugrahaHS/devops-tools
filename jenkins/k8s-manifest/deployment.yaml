@@ -84,6 +84,8 @@ spec:
               mountPath: /var/jenkins_home/casc
             - name: jenkins-init-groovy
               mountPath: /var/jenkins_home/init.groovy.d
+            - name: jenkins-jobdsl
+              mountPath: /var/jenkins_home/jobdsl
       volumes:
         - name: jenkins-data
           persistentVolumeClaim:
@@ -97,16 +99,27 @@ spec:
                   name: casc-tools-config
               - configMap:
                   name: casc-jobs-go-config
+              # - configMap:
+              #     name: casc-jobs-react-config
+              # - configMap:
+              #     name: casc-jobdsl-seed-config
+              # - configMap:
+              #     name: casc-jobdsl-go-config
+              # - configMap:
+              #     name: casc-jobdsl-react-config
+              # - configMap:
+              #     name: casc-jobdsl-project-config
+        - name: jenkins-jobdsl
+          projected:
+            sources:
               - configMap:
-                  name: casc-jobs-react-config
+                  name: casc-jobdsl-go-template
               - configMap:
-                  name: casc-jobdsl-seed-config
-              - configMap:
-                  name: casc-jobdsl-go-config
-              - configMap:
-                  name: casc-jobdsl-react-config
+                  name: casc-jobdsl-react-template
               - configMap:
                   name: casc-jobdsl-project-config
+              - configMap:
+                  name: casc-jobdsl-seed-config
         - name: jenkins-plugins
           configMap:
             name: jenkins-plugins
