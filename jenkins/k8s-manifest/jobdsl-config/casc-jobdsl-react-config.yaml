@@ -4,7 +4,7 @@ metadata:
   name: casc-jobdsl-react-config
   namespace: jenkins
 data:
-  templates/react.groovy: |
+  react.groovy: |
     def cfg = binding.variables
 
     pipelineJob("DEVELOPMENT/${cfg.name}") {
@@ -30,4 +30,3 @@ data:
         }
       }
     }
-

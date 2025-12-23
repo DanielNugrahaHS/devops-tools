@@ -4,7 +4,7 @@ metadata:
   name: casc-jobdsl-go-config
   namespace: jenkins
 data:
-  templates/go.groovy: |
+  go.groovy: |
     def cfg = binding.variables
 
     pipelineJob("DEVELOPMENT/${cfg.name}") {
