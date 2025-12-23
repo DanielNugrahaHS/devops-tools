@@ -95,10 +95,10 @@ spec:
             sources:
               - configMap:
                   name: casc-jenkins-config
-              - configMap:
-                  name: casc-tools-config
-              - configMap:
-                  name: casc-jobs-go-config
+              # - configMap:
+              #     name: casc-tools-config
+              # - configMap:
+              #     name: casc-jobs-go-config
               # - configMap:
               #     name: casc-jobs-react-config
               # - configMap:
