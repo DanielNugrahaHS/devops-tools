@@ -2,7 +2,6 @@ import org.yaml.snakeyaml.Yaml
 
 def yaml = new Yaml()
 
-// GO PROJECTS
 def goCfg = yaml.load(readFileFromWorkspace('projects/go.yaml'))
 goCfg.projects.each { p ->
   evaluate readFileFromWorkspace('templates/go.groovy'), [
@@ -12,7 +11,6 @@ goCfg.projects.each { p ->
   ]
 }
 
-// REACT PROJECTS
 def reactCfg = yaml.load(readFileFromWorkspace('projects/react.yaml'))
 reactCfg.projects.each { p ->
   evaluate readFileFromWorkspace('templates/react.groovy'), [

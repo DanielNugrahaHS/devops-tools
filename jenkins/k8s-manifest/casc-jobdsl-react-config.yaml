@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: casc-jobdsl-react-config
+  namespace: jenkins
 data:
   templates/react.groovy: |
     def cfg = binding.variables
