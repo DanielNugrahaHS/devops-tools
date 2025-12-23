@@ -109,9 +109,9 @@ spec:
           projected:
             sources:
               - configMap:
-                  name: casc-jobdsl-go-template
+                  name: casc-jobdsl-go-config
               - configMap:
-                  name: casc-jobdsl-react-template
+                  name: casc-jobdsl-react-config
               - configMap:
                   name: casc-jobdsl-project-config
               - configMap:
