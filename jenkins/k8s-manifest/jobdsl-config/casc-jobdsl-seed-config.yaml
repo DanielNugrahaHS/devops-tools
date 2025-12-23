@@ -6,38 +6,82 @@ metadata:
 data:
   seed.groovy: |
     import org.yaml.snakeyaml.Yaml
-    import jenkins.model.Jenkins
-    import groovy.lang.Binding
-    import groovy.lang.GroovyShell
-    
+
     def yaml = new Yaml()
-    def root = Jenkins.instance.root
-    
-    def shell = new GroovyShell()
-    
-    // === GO PROJECTS ===
-    def goCfg = yaml.load(new File(root, "project/projects-go.yaml").text)
-    
+
+    /*
+     * ======================
+     * GO PROJECTS
+     * ======================
+     */
+    def goCfg = yaml.load(readFileFromWorkspace('project/go.yaml'))
+
     goCfg.projects.each { p ->
-      def binding = new Binding([
-        name: p.name,
-        port: p.port,
-        repo: p.repo
-      ])
-    
-      shell.setBinding(binding)
-      shell.evaluate(new File(root, "jobdsl/go/go.groovy"))
+      pipelineJob("DEVELOPMENT/${p.name}") {
+        description("Go service: ${p.name}")
+
+        definition {
+          cps {
+            sandbox(true)
+            script("""
+              pipeline {
+                agent any
+                environment {
+                  APP_NAME = '${p.name}'
+                  APP_PORT = '${p.port}'
+                }
+                stages {
+                  stage('Checkout') {
+                    steps {
+                      git '${p.repo}'
+                    }
+                  }
+                  stage('Build') {
+                    steps {
+                      sh 'go build ./...'
+                    }
+                  }
+                }
+              }
+            """)
+          }
+        }
+      }
     }
-    
-    // === REACT PROJECTS ===
-    def reactCfg = yaml.load(new File(root, "project/projects-react.yaml").text)
-    
+
+    /*
+     * ======================
+     * REACT PROJECTS
+     * ======================
+     */
+    def reactCfg = yaml.load(readFileFromWorkspace('project/react.yaml'))
+
     reactCfg.projects.each { p ->
-      def binding = new Binding([
-        name: p.name,
-        repo: p.repo
-      ])
-    
-      shell.setBinding(binding)
-      shell.evaluate(new File(root, "jobdsl/react/react.groovy"))
+      pipelineJob("DEVELOPMENT/${p.name}") {
+        description("React app: ${p.name}")
+
+        definition {
+          cps {
+            sandbox(true)
+            script("""
+              pipeline {
+                agent any
+                stages {
+                  stage('Checkout') {
+                    steps {
+                      git '${p.repo}'
+                    }
+                  }
+                  stage('Build') {
+                    steps {
+                      sh 'npm install'
+                      sh 'npm run build'
+                    }
+                  }
+                }
+              }
+            """)
+          }
+        }
+      }
     }
