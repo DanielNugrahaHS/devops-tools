@@ -107,6 +107,8 @@ spec:
             sources:
               - configMap:
                   name: casc-jenkins-config
+              - configMap:
+                  name: casc-jobs-seed-config 
         - name: jenkins-jobdsl
           projected:
             sources:

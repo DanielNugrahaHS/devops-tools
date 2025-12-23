@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: casc-jobs-seed-config
+  namespace: jenkins
+data:
+  casc-jobs-seed.yaml: |
+    jobs:
+      - script: >
+          job('seed-job') {
+            description('Seed Job - Job DSL Generator')
+            logRotator {
+              numToKeep(10)
+            }
+            steps {
+              dsl {
+                external('jobdsl/seed.groovy')
+                removeAction('DELETE')
+                removeViewAction('DELETE')
+                lookupStrategy('JENKINS_ROOT')
+              }
+            }
+          }

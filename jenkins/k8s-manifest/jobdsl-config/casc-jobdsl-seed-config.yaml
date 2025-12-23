@@ -6,24 +6,38 @@ metadata:
 data:
   seed.groovy: |
     import org.yaml.snakeyaml.Yaml
-    import jenkins.model.*
+    import jenkins.model.Jenkins
+    import groovy.lang.Binding
+    import groovy.lang.GroovyShell
     
     def yaml = new Yaml()
     def root = Jenkins.instance.root
     
+    def shell = new GroovyShell()
+    
+    // === GO PROJECTS ===
     def goCfg = yaml.load(new File(root, "project/projects-go.yaml").text)
+    
     goCfg.projects.each { p ->
-      evaluate new File(root, "jobdsl/go/go.groovy").text, [
+      def binding = new Binding([
         name: p.name,
         port: p.port,
         repo: p.repo
-      ]
+      ])
+    
+      shell.setBinding(binding)
+      shell.evaluate(new File(root, "jobdsl/go/go.groovy"))
     }
     
+    // === REACT PROJECTS ===
     def reactCfg = yaml.load(new File(root, "project/projects-react.yaml").text)
+    
     reactCfg.projects.each { p ->
-      evaluate new File(root, "jobdsl/react/react.groovy").text, [
+      def binding = new Binding([
         name: p.name,
         repo: p.repo
-      ]
+      ])
+    
+      shell.setBinding(binding)
+      shell.evaluate(new File(root, "jobdsl/react/react.groovy"))
     }

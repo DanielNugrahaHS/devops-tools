@@ -26,32 +26,32 @@ data:
 
     instance.save()
 
-  01-seed-job.groovy: |
-    import jenkins.model.*
-    import javaposse.jobdsl.plugin.*
+  # 01-seed-job.groovy: |
+  #   import jenkins.model.*
+  #   import javaposse.jobdsl.plugin.*
     
-    def jenkins = Jenkins.instance
+  #   def jenkins = Jenkins.instance
     
-    if (jenkins.getItem("seed-job") == null) {
-      println "Creating seed-job..."
+  #   if (jenkins.getItem("seed-job") == null) {
+  #     println "Creating seed-job..."
     
-      def job = jenkins.createProject(FreeStyleProject, "seed-job")
+  #     def job = jenkins.createProject(FreeStyleProject, "seed-job")
     
-      job.buildersList.add(new ExecuteDslScripts(
-        new ExecuteDslScripts.ScriptLocation(
-          ExecuteDslScripts.ScriptLocationType.FILE,
-          "jobdsl/seed.groovy",
-          null
-        ),
-        true,
-        RemovedJobAction.DELETE,
-        RemovedViewAction.DELETE,
-        LookupStrategy.JENKINS_ROOT
-      ))
+  #     job.buildersList.add(new ExecuteDslScripts(
+  #       new ExecuteDslScripts.ScriptLocation(
+  #         ExecuteDslScripts.ScriptLocationType.FILE,
+  #         "jobdsl/seed.groovy",
+  #         null
+  #       ),
+  #       true,
+  #       RemovedJobAction.DELETE,
+  #       RemovedViewAction.DELETE,
+  #       LookupStrategy.JENKINS_ROOT
+  #     ))
     
-      job.save()
-    } else {
-      println "seed-job already exists"
-    }
+  #     job.save()
+  #   } else {
+  #     println "seed-job already exists"
+  #   }
 
 
