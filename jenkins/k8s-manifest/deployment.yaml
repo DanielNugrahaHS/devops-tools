@@ -86,6 +86,7 @@ spec:
               mountPath: /var/jenkins_home/init.groovy.d
             - name: jenkins-jobdsl
               mountPath: /var/jenkins_home/jobdsl/seed.groovy
+              subPath: seed.groovy
             - name: jenkins-jobdsl
               mountPath: /var/jenkins_home/jobdsl/react/react.groovy
               subPath: react.groovy
