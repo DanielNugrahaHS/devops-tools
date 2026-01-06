@@ -4,12 +4,18 @@ metadata:
   name: jenkins-init-groovy
   namespace: jenkins
 data:
-  create-admin.groovy: |
+  create-admin-and-auto-approve.groovy: |
     import jenkins.model.*
     import hudson.security.*
+    import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval
 
     def instance = Jenkins.getInstance()
 
+    /*
+     * ============================
+     * 1. CREATE ADMIN USER
+     * ============================
+     */
     if (!(instance.getSecurityRealm() instanceof HudsonPrivateSecurityRealm)) {
       def realm = new HudsonPrivateSecurityRealm(false)
       instance.setSecurityRealm(realm)
@@ -24,34 +30,17 @@ data:
       println("ℹ️ admin user already exists")
     }
 
+    /*
+     * ============================
+     * 2. AUTO APPROVE ALL SCRIPTS
+     * ============================
+     */
+    try {
+      println("Auto-approving all Groovy scripts (Script Security)")
+      ScriptApproval.get().approveAll()
+      println("All scripts approved")
+    } catch (Exception e) {
+      println("❌ Failed to auto-approve scripts: ${e.message}")
+    }
+
     instance.save()
-
-  # 01-seed-job.groovy: |
-  #   import jenkins.model.*
-  #   import javaposse.jobdsl.plugin.*
-    
-  #   def jenkins = Jenkins.instance
-    
-  #   if (jenkins.getItem("seed-job") == null) {
-  #     println "Creating seed-job..."
-    
-  #     def job = jenkins.createProject(FreeStyleProject, "seed-job")
-    
-  #     job.buildersList.add(new ExecuteDslScripts(
-  #       new ExecuteDslScripts.ScriptLocation(
-  #         ExecuteDslScripts.ScriptLocationType.FILE,
-  #         "jobdsl/seed.groovy",
-  #         null
-  #       ),
-  #       true,
-  #       RemovedJobAction.DELETE,
-  #       RemovedViewAction.DELETE,
-  #       LookupStrategy.JENKINS_ROOT
-  #     ))
-    
-  #     job.save()
-  #   } else {
-  #     println "seed-job already exists"
-  #   }
-
-
