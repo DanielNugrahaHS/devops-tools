@@ -49,5 +49,5 @@ data:
             serverUrl: "https://kubernetes.default"
             namespace: "jenkins"
             jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
-            useWebSocket: true
+            webSocket: true
             containerCapStr: "10"
