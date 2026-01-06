@@ -40,7 +40,7 @@ data:
       ScriptApproval.get().preapproveAll()
       println("All scripts approved")
     } catch (Exception e) {
-      println("❌ Failed to auto-approve scripts: ${e.message}")
+      println("Failed to auto-approve scripts: ${e.message}")
     }
 
     instance.save()
