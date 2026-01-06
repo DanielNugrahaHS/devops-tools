@@ -1,7 +1,7 @@
 import groovy.json.JsonSlurper
 
 def jsonText = readFileFromWorkspace(
-  'job-dsl/jobs/react/react.json'
+  'jenkins/job-dsl/jobs/react/react.json'
 )
 
 def data = new JsonSlurper().parseText(jsonText)

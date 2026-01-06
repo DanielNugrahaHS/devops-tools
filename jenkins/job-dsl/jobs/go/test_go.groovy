@@ -1,7 +1,7 @@
 import groovy.json.JsonSlurper
 
 def jsonText = readFileFromWorkspace(
-  'job-dsl/jobs/go/go.json'
+  'jenkins/job-dsl/jobs/go/go.json'
 )
 
 def data = new JsonSlurper().parseText(jsonText)
