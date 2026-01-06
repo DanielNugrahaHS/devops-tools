@@ -7,7 +7,7 @@ def jsonText = readFileFromWorkspace(
 def data = new JsonSlurper().parseText(jsonText)
 
 def template = evaluate(
-  readFileFromWorkspace('job-dsl/shared/pipelineJobTemplate.groovy')
+  readFileFromWorkspace('jenkins/job-dsl/shared/pipelineJobTemplate.groovy')
 )
 
 folder(data.folder)
