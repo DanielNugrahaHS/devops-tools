@@ -1,8 +1,44 @@
-def template = load 'jenkins/job-dsl/shared/pipelineJobTemplate.groovy'
+import groovy.json.JsonSlurper
 
-template.createPipelineJob(
-  this,
-  'react',
-  'react_web',
-  'git@github.com:ORG/react-api.git'
+def jsonText = readFileFromWorkspace(
+  'job-dsl/jobs/react/react.json'
 )
+
+def data = new JsonSlurper().parseText(jsonText)
+
+def template = evaluate(
+  readFileFromWorkspace('job-dsl/shared/pipelineJobTemplate.groovy')
+)
+
+folder(data.folder)
+
+data.jobs.each { job ->
+
+  template(this, [
+    folder   : data.folder,
+    name     : job.name,
+    language : data.language,
+    pipeline : """
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        git '${job.repo}'
+      }
+    }
+    stage('Install') {
+      steps {
+        sh 'npm install'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+  }
+}
+"""
+  ])
+}

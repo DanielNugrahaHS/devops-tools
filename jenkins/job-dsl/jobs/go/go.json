@@ -1,0 +1,10 @@
+{
+  "folder": "GO",
+  "language": "golang",
+  "jobs": [
+    {
+      "name": "go_api",
+      "repo": "https://github.com/org/go-api.git"
+    }
+  ]
+}

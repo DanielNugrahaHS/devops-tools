@@ -1,5 +1,39 @@
-def FOLDER = 'go'
-def JOB_NAME = 'go_api'
-def REPO_URL = 'git@github.com:ORG/go-api.git'
+import groovy.json.JsonSlurper
 
-apply from: 'jenkins/job-dsl/shared/pipelineJobTemplate.groovy'
+def jsonText = readFileFromWorkspace(
+  'job-dsl/jobs/go/go.json'
+)
+
+def data = new JsonSlurper().parseText(jsonText)
+
+def template = evaluate(
+  readFileFromWorkspace('job-dsl/shared/pipelineJobTemplate.groovy')
+)
+
+folder(data.folder)
+
+data.jobs.each { job ->
+
+  template(this, [
+    folder   : data.folder,
+    name     : job.name,
+    language : data.language,
+    pipeline : """
+pipeline {
+  agent any
+  stages {
+    stage('Checkout') {
+      steps {
+        git '${job.repo}'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'go version'
+      }
+    }
+  }
+}
+"""
+  ])
+}

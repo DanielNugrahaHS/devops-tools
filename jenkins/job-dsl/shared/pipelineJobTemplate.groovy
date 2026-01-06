@@ -1,19 +1,14 @@
-def createPipelineJob(dsl, folder, jobName, repoUrl) {
-  dsl.pipelineJob("${folder}/${jobName}") {
+return { dsl, config ->
+
+  dsl.pipelineJob("${config.folder}/${config.name}") {
+
+    description("Auto-generated ${config.language} pipeline")
+
     definition {
-      cpsScm {
-        scm {
-          git {
-            remote {
-              url(repoUrl)
-            }
-            branches('*/main')
-          }
-        }
-        scriptPath('Jenkinsfile')
+      cps {
+        sandbox(true)
+        script(config.pipeline)
       }
     }
   }
 }
-
-return this

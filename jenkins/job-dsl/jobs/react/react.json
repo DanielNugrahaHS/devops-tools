@@ -1,0 +1,10 @@
+{
+  "folder": "REACT",
+  "language": "react",
+  "jobs": [
+    {
+      "name": "react",
+      "repo": "https://github.com/org/react.git"
+    }
+  ]
+}
