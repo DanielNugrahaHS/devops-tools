@@ -5,6 +5,10 @@
     {
       "name": "go_api",
       "repo": "https://github.com/org/go-api.git"
+    },
+    {
+      "name": "go_air",
+      "repo": "https://github.com/org/go-air.git"
     }
   ]
 }
