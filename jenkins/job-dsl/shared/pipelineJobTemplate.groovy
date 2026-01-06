@@ -1,13 +1,16 @@
-def createPipelineJob(folder, name, repo) {
-  pipelineJob("${folder}/${name}") {
+def createPipelineJob(dsl, folderName, jobName, repoUrl) {
+  dsl.pipelineJob("${folderName}/${jobName}") {
     definition {
       cpsScm {
         scm {
           git {
-            remote { url(repo) }
+            remote {
+              url(repoUrl)
+            }
             branches('*/main')
           }
         }
+        scriptPath('Jenkinsfile')
       }
     }
   }
