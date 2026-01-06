@@ -11,4 +11,5 @@ resources:
   - plugin.yaml
   - jenkins-init-groovy.yaml
   - casc-config
+  - jenkins-slave
   #- credential.yaml
