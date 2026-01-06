@@ -10,7 +10,7 @@ metadata:
 spec:
   selector:
     app: jenkins-server
-  type: NodePort # minikube
+  # type: NodePort # minikube
   ports:
     - name: http
       port: 8080
