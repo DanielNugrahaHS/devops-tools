@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
+  name: jenkins-react-agent
   namespace: jenkins
 spec:
   serviceAccountName: jenkins-agent

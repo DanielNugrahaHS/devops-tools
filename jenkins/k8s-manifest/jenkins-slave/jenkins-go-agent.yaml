@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
+  name: jenkins-go-agent
   namespace: jenkins
 spec:
   serviceAccountName: jenkins-agent
