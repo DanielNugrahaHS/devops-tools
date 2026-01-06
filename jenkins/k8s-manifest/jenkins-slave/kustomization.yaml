@@ -6,6 +6,3 @@ namespace: jenkins
 resources:
   - jenkins-agent-rbac.yaml
   - jenkins-agent-sa.yaml
-  - jenkins-go-agent.yaml
-  - jenkins-jnlp.yaml
-  - jenkins-react-agent.yaml
