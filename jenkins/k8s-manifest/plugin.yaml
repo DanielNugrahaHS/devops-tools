@@ -14,5 +14,5 @@ data:
     workflow-cps:latest
     nodejs:latest
     golang:latest
-    
+    kubernetes:latest
 
