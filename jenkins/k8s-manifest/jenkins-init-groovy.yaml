@@ -37,7 +37,7 @@ data:
      */
     try {
       println("Auto-approving all Groovy scripts (Script Security)")
-      ScriptApproval.get().approveAll()
+      ScriptApproval.get().preapproveAll()
       println("All scripts approved")
     } catch (Exception e) {
       println("❌ Failed to auto-approve scripts: ${e.message}")
