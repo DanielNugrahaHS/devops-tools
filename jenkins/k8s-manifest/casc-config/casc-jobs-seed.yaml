@@ -6,15 +6,23 @@ metadata:
 data:
   casc-jobs-seed.yaml: |
     jobs:
-      - script: >
+      - script: |
           job('seed-job') {
-            description('Seed Job - Job DSL Generator')
-            logRotator {
-              numToKeep(10)
+            description('Seed Job - manage all Jenkins jobs via Job DSL')
+    
+            scm {
+              git {
+                remote {
+                  url('https://github.com/DanielNugrahaHS/devops-tools.git')
+                  credentials('github-token')
+                }
+                branches('*/main')
+              }
             }
+    
             steps {
               dsl {
-                external('jobdsl/seed.groovy')
+                external('jenkins/job-dsl/jobs/**/*.groovy')
                 removeAction('DELETE')
                 removeViewAction('DELETE')
                 lookupStrategy('JENKINS_ROOT')

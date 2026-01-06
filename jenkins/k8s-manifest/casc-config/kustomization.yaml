@@ -5,7 +5,6 @@ namespace: jenkins
 
 resources:
   - casc-jenkins-config.yaml
-  - casc-jobs-go-config.yaml
-  - casc-jobs-react-config.yaml
   - casc-jobs-seed.yaml
   - casc-tools-config.yaml
+  - casc-credential.yaml
