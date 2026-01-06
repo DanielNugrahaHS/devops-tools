@@ -103,7 +103,7 @@ spec:
               - configMap:
                   name: casc-credentials
               - configMap:
-                  name: casc-jobs-seed
+                  name: casc-jobs-seed-config
         - name: jenkins-plugins
           configMap:
             name: jenkins-plugins
