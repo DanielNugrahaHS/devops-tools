@@ -32,13 +32,13 @@ data:
 
     /*
      * ============================
-     * 2. AUTO APPROVE ALL SCRIPTS
+     * 2. AUTO APPROVE SCRIPT SECURITY
      * ============================
      */
+    println("Auto-approving all Groovy scripts (Script Security)")
     try {
-      println("Auto-approving all Groovy scripts (Script Security)")
       ScriptApproval.get().preapproveAll()
-      println("All scripts approved")
+      println("All scripts pre-approved")
     } catch (Exception e) {
       println("Failed to auto-approve scripts: ${e.message}")
     }
