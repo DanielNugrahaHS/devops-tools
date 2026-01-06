@@ -1,5 +1,5 @@
-def createPipelineJob(dsl, folderName, jobName, repoUrl) {
-  dsl.pipelineJob("${folderName}/${jobName}") {
+def createPipelineJob(dsl, folder, jobName, repoUrl) {
+  dsl.pipelineJob("${folder}/${jobName}") {
     definition {
       cpsScm {
         scm {

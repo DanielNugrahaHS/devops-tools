@@ -1,4 +1,4 @@
-def template = this
+def template = load 'jenkins/job-dsl/shared/pipelineJobTemplate.groovy'
 
 template.createPipelineJob(
   this,
