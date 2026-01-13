@@ -45,19 +45,22 @@ data:
       clouds:
         - kubernetes:
             name: "kubernetes"
-            serverUrl: "https://kubernetes.default"
             namespace: "jenkins"
-            jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
+            serverUrl: "https://kubernetes.default.svc.cluster.local"
+            jenkinsUrl: "http://jenkins:8080"
             webSocket: true
-            containerCapStr: "10"
-
+            containerCapStr: "2"
             templates:
               - name: "go-agent"
                 label: "go"
                 serviceAccount: "jenkins-agent"
                 idleMinutes: 5
-
                 containers:
+                  - name: "jnlp"
+                    image: "jenkins/inbound-agent:latest"
+                    args: "${computer.jnlpConnSecret} ${computer.name}"
+                    resourceRequestCpu: "100m"
+                    resourceRequestMemory: "256Mi"
                   - name: "go"
                     image: "golang:1.22"
                     ttyEnabled: true
@@ -71,8 +74,12 @@ data:
                 label: "react"
                 serviceAccount: "jenkins-agent"
                 idleMinutes: 5
-
                 containers:
+                  - name: "jnlp"
+                    image: "jenkins/inbound-agent:latest"
+                    args: "${computer.jnlpConnSecret} ${computer.name}"
+                    resourceRequestCpu: "100m"
+                    resourceRequestMemory: "256Mi"
                   - name: "node"
                     image: "node:20-alpine"
                     ttyEnabled: true
