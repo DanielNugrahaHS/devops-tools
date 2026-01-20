@@ -15,4 +15,5 @@ data:
     nodejs:latest
     golang:latest
     kubernetes:latest
+    script-security:latest
 

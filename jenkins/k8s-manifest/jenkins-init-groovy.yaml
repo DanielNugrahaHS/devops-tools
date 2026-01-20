@@ -44,3 +44,19 @@ data:
     }
 
     instance.save()
+
+  disable-jobdsl-security.groovy: |
+    import javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration
+    import jenkins.model.GlobalConfiguration
+
+    def config = GlobalConfiguration.all().get(GlobalJobDslSecurityConfiguration.class)
+    config.useScriptSecurity = false
+    config.save()
+
+  auto-approve-jobdsl.groovy: |
+    import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval
+
+    def scriptApproval = ScriptApproval.get()
+    scriptApproval.pendingScripts.each { pending ->
+        scriptApproval.approveScript(pending.getHash())
+    }
