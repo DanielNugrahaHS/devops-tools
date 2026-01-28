@@ -8,3 +8,4 @@ resources:
   - casc-jobs-seed.yaml
   - casc-tools-config.yaml
   - casc-credential.yaml
+  - user-password.yaml

@@ -54,6 +54,9 @@ spec:
                 secretKeyRef:
                   name: github-token
                   key: GITHUB_TOKEN
+          envFrom:
+            - secretRef:
+                name: jenkins-users-secret
           resources:
             limits:
               memory: "2Gi"
