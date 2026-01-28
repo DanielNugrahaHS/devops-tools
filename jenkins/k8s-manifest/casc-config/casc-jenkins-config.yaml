@@ -12,14 +12,14 @@ data:
         local:
           allowsSignup: false
           users:
-            - id: admin
-              password: admin
+            - id: devops
+              password: "${DEVOPS_PASSWORD}"
             - id: developer
-              password: developer
+              password: "${DEVELOPER_PASSWORD}"
             - id: viewer
-              password: viewer
+              password: "${VIEWER_PASSWORD}"
             - id: test
-              password: test
+              password: "${TEST_PASSWORD}"
 
       authorizationStrategy:
         projectMatrix:
