@@ -53,7 +53,7 @@ data:
             templates:
               - name: "go-agent"
                 label: "go"
-                nodeSelector: "project=cis,runner=true"
+                nodeSelector: "project=default,agent=true"
                 serviceAccount: "jenkins-agent"
                 idleMinutes: 5
                 containers:
@@ -73,7 +73,7 @@ data:
 
               - name: "react-agent"
                 label: "react"
-                nodeSelector: "project=cis,runner=true"
+                nodeSelector: "project=default,agent=true"
                 serviceAccount: "jenkins-agent"
                 idleMinutes: 5
                 containers:
